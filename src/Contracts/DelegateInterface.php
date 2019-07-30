@@ -6,5 +6,10 @@ use Sun\Event;
 
 interface DelegateInterface
 {
-    public function invoke(Event $event, $parameters = []);
+    /**
+     * @param Event $event
+     * @param array $parameters
+     * @return mixed
+     */
+    public function invoke(Event $event, array $parameters = []);
 }

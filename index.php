@@ -2,10 +2,6 @@
 
 use Sun\Event;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include_once __DIR__ . '/vendor/autoload.php';
 
 class A
@@ -34,20 +30,14 @@ function test($instance)
 
 class MyClass extends Event
 {
-    protected $data = [];
+    public $name = 'my_class';
 
-    public function __set($name, $value)
+    public function executeMethod()
     {
-        $this->data[$name] = $value;
         $this->execute();
         $this->executeCallback(function ($result) {
             echo "result: {$result}<br/>";
         });
-    }
-
-    public function __get($name)
-    {
-        return $this->data[$name];
     }
 }
 
@@ -55,4 +45,4 @@ $myClass = new MyClass();
 $myClass->subscribe([A::class, 'test']);
 $myClass->subscribe([new B, 'test']);
 $myClass->subscribe('test');
-$myClass->name = 'name 2';
+$myClass->executeMethod();

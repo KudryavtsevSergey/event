@@ -11,6 +11,9 @@ class Event implements EventInterface
      */
     protected $arrayDelegate;
 
+    /**
+     * Event constructor.
+     */
     public function __construct()
     {
         $this->arrayDelegate = new ArrayDelegate();
@@ -39,16 +42,16 @@ class Event implements EventInterface
     protected function execute($parameters = [])
     {
         $parameters = (array)$parameters;
-        foreach ($this->arrayDelegate as $delegate) {
+        array_walk($this->arrayDelegate, function (Delegate $delegate) use ($parameters) {
             $delegate->invoke($this, $parameters);
-        }
+        });
     }
 
     /**
      * @param callable $callback
      * @param array $parameters
      */
-    protected function executeCallback(callable $callback, $parameters = [])
+    protected function executeCallback(callable $callback, array $parameters = [])
     {
         $parameters = (array)$parameters;
         foreach ($this->arrayDelegate as $delegate) {

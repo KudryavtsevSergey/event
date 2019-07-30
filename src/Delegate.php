@@ -2,7 +2,7 @@
 
 namespace Sun;
 
-use mysql_xdevapi\Exception;
+use Exception;
 use Sun\Contracts\DelegateInterface;
 
 class Delegate implements DelegateInterface
@@ -12,11 +12,21 @@ class Delegate implements DelegateInterface
      */
     protected $callback;
 
+    /**
+     * Delegate constructor.
+     * @param callable $callback
+     */
     public function __construct(callable $callback)
     {
         $this->callback = $callback;
     }
 
+    /**
+     * @param Event $event
+     * @param array $parameters
+     * @return mixed
+     * @throws Exception
+     */
     public function invoke(Event $event, $parameters = [])
     {
         if (!is_callable($this->callback)) {
