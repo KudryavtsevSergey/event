@@ -9,7 +9,7 @@ class A
     static function test(MyClass $instance)
     {
         echo "called: " . __METHOD__ . "<br/>";
-        return "Static: Hello " . $instance->name;
+        return "Static: Hello " . get_class($instance);
     }
 }
 
@@ -18,27 +18,25 @@ class B
     function test(MyClass $instance)
     {
         echo "called: " . __METHOD__ . "<br/>";
-        return "Class: Hello " . $instance->name;
+        return "Class: Hello " . get_class($instance);
     }
 }
 
 function test(MyClass $instance)
 {
     echo "called: " . __METHOD__ . "<br/>";
-    return "Function: Hello " . $instance->name;
+    return "Function: Hello " . get_class($instance);
 }
 
 //class must extend Event
 class MyClass extends Event
 {
-    public $name = 'my_class';
-
     /**
      * Execute method
      */
     public function executeMethod()
     {
-        $this->execute();
+        $this->execute(['test']);
         $this->executeCallback(function ($result) {
             echo "result: {$result}<br/>";
         });
@@ -54,9 +52,10 @@ $myClass->subscribe([new B, 'test']);
 //subscribe function
 $myClass->subscribe('test');
 //subscribe function
-$myClass->subscribe(function (MyClass $instance) {
+$myClass->subscribe(function (MyClass $instance, $data) {
     echo "called: " . __METHOD__ . "<br/>";
-    return "Closure: Hello " . $instance->name;
+    echo "<pre>" . print_r($data, 1) . "</pre>";
+    return "Closure: Hello " . get_class($instance);
 });
 //call method
 $myClass->executeMethod();

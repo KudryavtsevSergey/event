@@ -33,8 +33,6 @@ class Delegate implements DelegateInterface
             throw new Exception("Function not callable!");
         }
 
-        $parameters = array_merge([$event], (array)$parameters);
-
-        return call_user_func_array($this->callback, $parameters);
+        return call_user_func($this->callback, $event, $parameters);
     }
 }
