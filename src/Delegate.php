@@ -27,7 +27,7 @@ class Delegate implements DelegateInterface
      * @return mixed
      * @throws Exception
      */
-    public function invoke(Event $event, $parameters = [])
+    public function invoke(Event $event, array $parameters = [])
     {
         if (!is_callable($this->callback)) {
             throw new Exception("Function not callable!");
