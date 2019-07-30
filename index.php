@@ -6,7 +6,7 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 class A
 {
-    static function test($instance)
+    static function test(MyClass $instance)
     {
         echo "called: " . __METHOD__ . "<br/>";
         return "Static: Hello " . $instance->name;
@@ -15,14 +15,14 @@ class A
 
 class B
 {
-    function test($instance)
+    function test(MyClass $instance)
     {
         echo "called: " . __METHOD__ . "<br/>";
         return "Class: Hello " . $instance->name;
     }
 }
 
-function test($instance)
+function test(MyClass $instance)
 {
     echo "called: " . __METHOD__ . "<br/>";
     return "Function: Hello " . $instance->name;
@@ -54,7 +54,7 @@ $myClass->subscribe([new B, 'test']);
 //subscribe function
 $myClass->subscribe('test');
 //subscribe function
-$myClass->subscribe(function ($instance) {
+$myClass->subscribe(function (MyClass $instance) {
     echo "called: " . __METHOD__ . "<br/>";
     return "Closure: Hello " . $instance->name;
 });
