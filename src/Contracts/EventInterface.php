@@ -5,11 +5,11 @@ namespace Sun\Contracts;
 interface EventInterface
 {
     /**
-     * @param $value
+     * @param callable $callback
      * @param null $index
-     * @return void
+     * @return mixed
      */
-    public function subscribe($value, $index = null);
+    public function subscribe(callable $callback, $index = null);
 
     /**
      * @param $index

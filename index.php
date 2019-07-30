@@ -28,10 +28,14 @@ function test($instance)
     return "Function: Hello " . $instance->name;
 }
 
+//class must extend Event
 class MyClass extends Event
 {
     public $name = 'my_class';
 
+    /**
+     * Execute method
+     */
     public function executeMethod()
     {
         $this->execute();
@@ -41,8 +45,18 @@ class MyClass extends Event
     }
 }
 
+//create new class
 $myClass = new MyClass();
+//subscribe static class
 $myClass->subscribe([A::class, 'test']);
+//subscribe non static class
 $myClass->subscribe([new B, 'test']);
+//subscribe function
 $myClass->subscribe('test');
+//subscribe function
+$myClass->subscribe(function ($instance) {
+    echo "called: " . __METHOD__ . "<br/>";
+    return "Closure: Hello " . $instance->name;
+});
+//call method
 $myClass->executeMethod();

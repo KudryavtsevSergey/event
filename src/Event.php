@@ -20,12 +20,12 @@ class Event implements EventInterface
     }
 
     /**
-     * @param $value
+     * @param callable $callback
      * @param null $index
      */
-    public function subscribe($value, $index = null)
+    public function subscribe(callable $callback, $index = null)
     {
-        $this->arrayDelegate->offsetSet($index, $value);
+        $this->arrayDelegate->offsetSet($index, $callback);
     }
 
     /**
